@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles/App.css";
 import styled from "styled-components";
 
-import specList from "./assets/specList";
+// import specList from "./assets/specList";
+import RaidTable from "./components/RaidTable";
+import Modal from "./components/utils/Modal";
 
 const Content = styled.div`
   display: flex;
@@ -17,22 +19,29 @@ const Content = styled.div`
 `;
 
 const RaidContainer = styled.div`
-  border: 1px solid green;
   min-width: 500px;
   flex: 1;
 `;
 
 const BuffsContainer = styled.div`
-  border: 1px solid red;
   min-width: 300px;
   flex: 1;
 `;
 
 const App = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <Content>
-      <RaidContainer>uno</RaidContainer>
-      <BuffsContainer>dos</BuffsContainer>
+      <Modal isModalOpen={isModalOpen} toggleModal={handleModalOpen} />
+      <RaidContainer>
+        <RaidTable handleModalOpen={handleModalOpen} />
+      </RaidContainer>
+      <BuffsContainer>buffs and debuffs</BuffsContainer>
     </Content>
   );
 };
