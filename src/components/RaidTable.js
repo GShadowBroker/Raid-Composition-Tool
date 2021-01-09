@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const Table = styled.table`
+const TableContainer = styled.div`
   background-color: #3d3d3d;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+`;
+
+const Table = styled.table`
   width: 100%;
   border-radius: 2px;
   padding: 0.6rem;
@@ -30,23 +34,31 @@ const TBody = styled.tbody`
   }
 `;
 
-const Row = ({ rowNumber, callback }) => {
+const Row = ({ rowNumber, raidComp, callback }) => {
   return (
     <tr>
-      <td onClick={() => callback(rowNumber)}>Empty</td>
-      <td onClick={() => callback(rowNumber)}>Empty</td>
+      <td onClick={() => callback(rowNumber, 1)}>
+        {raidComp[rowNumber - 1][0] ? raidComp[rowNumber - 1][0] : "Empty"}
+      </td>
+      <td onClick={() => callback(rowNumber, 2)}>
+        {raidComp[rowNumber - 1][1] ? raidComp[rowNumber - 1][1] : "Empty"}
+      </td>
     </tr>
   );
 };
 
-const RaidTable = ({ handleModalOpen }) => {
+const RaidTable = ({ handleModalOpen, raidComp }) => {
   useEffect(() => {
     const onEnter = (element) => {
-      element.textContent = "Click to add player";
+      if (element.textContent === "Empty") {
+        element.textContent = "Click to add player";
+      }
     };
 
     const onLeave = (element) => {
-      element.textContent = "Empty";
+      if (element.textContent === "Click to add player") {
+        element.textContent = "Empty";
+      }
     };
 
     document.querySelectorAll("td").forEach((td) => {
@@ -63,7 +75,7 @@ const RaidTable = ({ handleModalOpen }) => {
   }, []);
 
   return (
-    <>
+    <TableContainer>
       <Table>
         <THead>
           <tr>
@@ -72,11 +84,11 @@ const RaidTable = ({ handleModalOpen }) => {
           </tr>
         </THead>
         <TBody>
-          <Row rowNumber={1} callback={handleModalOpen} />
-          <Row rowNumber={2} callback={handleModalOpen} />
-          <Row rowNumber={3} callback={handleModalOpen} />
-          <Row rowNumber={4} callback={handleModalOpen} />
-          <Row rowNumber={5} callback={handleModalOpen} />
+          <Row rowNumber={1} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={2} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={3} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={4} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={5} callback={handleModalOpen} raidComp={raidComp} />
         </TBody>
       </Table>
 
@@ -88,11 +100,11 @@ const RaidTable = ({ handleModalOpen }) => {
           </tr>
         </THead>
         <TBody>
-          <Row rowNumber={6} callback={handleModalOpen} />
-          <Row rowNumber={7} callback={handleModalOpen} />
-          <Row rowNumber={8} callback={handleModalOpen} />
-          <Row rowNumber={9} callback={handleModalOpen} />
-          <Row rowNumber={10} callback={handleModalOpen} />
+          <Row rowNumber={6} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={7} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={8} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={9} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={10} callback={handleModalOpen} raidComp={raidComp} />
         </TBody>
       </Table>
 
@@ -104,14 +116,14 @@ const RaidTable = ({ handleModalOpen }) => {
           </tr>
         </THead>
         <TBody>
-          <Row rowNumber={11} callback={handleModalOpen} />
-          <Row rowNumber={12} callback={handleModalOpen} />
-          <Row rowNumber={13} callback={handleModalOpen} />
-          <Row rowNumber={14} callback={handleModalOpen} />
-          <Row rowNumber={15} callback={handleModalOpen} />
+          <Row rowNumber={11} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={12} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={13} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={14} callback={handleModalOpen} raidComp={raidComp} />
+          <Row rowNumber={15} callback={handleModalOpen} raidComp={raidComp} />
         </TBody>
       </Table>
-    </>
+    </TableContainer>
   );
 };
 

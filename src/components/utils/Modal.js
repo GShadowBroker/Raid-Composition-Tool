@@ -15,12 +15,31 @@ const ModalOverlay = styled.div`
   align-items: center;
 `;
 
+const ModalCard = styled.div`
+  height: 350px;
+  width: 400px;
+  background: #4e4e4e;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+`;
+
 const ModalContainer = styled.div``;
 
-const Modal = ({ isModalOpen, toggleModal }) => {
+const Modal = ({ isModalOpen, toggleModal, children }) => {
+  const handleModalClick = (e) => {
+    if (e.target.id !== "modal_overlay") return;
+    toggleModal();
+  };
+
   return (
-    <ModalOverlay open={isModalOpen} onClick={toggleModal}>
-      <ModalContainer>content</ModalContainer>
+    <ModalOverlay
+      open={isModalOpen}
+      onClick={handleModalClick}
+      id="modal_overlay"
+    >
+      <ModalContainer>
+        <ModalCard>{children}</ModalCard>
+      </ModalContainer>
     </ModalOverlay>
   );
 };
