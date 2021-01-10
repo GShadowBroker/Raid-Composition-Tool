@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./styles/App.css";
 import styled from "styled-components";
 
-// import specList from "./assets/specList";
+import specList from "./assets/specList";
+import { db } from "./constants/links";
 import playerClasses from "./assets/playerClasses";
 import RaidTable from "./components/RaidTable";
 import Modal from "./components/utils/Modal";
@@ -105,7 +106,6 @@ const App = () => {
   const addSpec = (spec) => {
     setLastSelectedSpec(spec);
     const newRaidComp = raidComp;
-    console.log("cell", currentCell);
     if (currentCell[1] === 1) {
       newRaidComp[currentCell[0] - 1] = [spec, raidComp[currentCell[0] - 1][1]];
       setRaidComp(newRaidComp);
@@ -115,6 +115,32 @@ const App = () => {
     }
     setIsModalOpen(false);
   };
+
+  const raid = [];
+  raidComp.forEach((row) => {
+    if (row[0]) {
+      raid.push(row[0]);
+    }
+    if (row[1]) {
+      raid.push(row[1]);
+    }
+  });
+
+  const buffs = [];
+  const debuffs = [];
+  raid.forEach((spec) => {
+    const matchedSpec = specList.find((s) => s.name === spec);
+    if (!matchedSpec) return;
+    if (matchedSpec.buffs.length > 0) {
+      matchedSpec.buffs.forEach((b) => buffs.push(b));
+    }
+    if (matchedSpec.debuffs.length > 0) {
+      matchedSpec.debuffs.forEach((d) => debuffs.push(d));
+    }
+  });
+
+  console.log("buffs", buffs);
+  console.log("debuffs", debuffs);
 
   return (
     <Content>
@@ -145,7 +171,44 @@ const App = () => {
       <RaidContainer>
         <RaidTable handleModalOpen={handleModalOpen} raidComp={raidComp} />
       </RaidContainer>
-      <BuffsContainer>buffs and debuffs</BuffsContainer>
+      <BuffsContainer>
+        <h3>buffs:</h3>
+        <ul>
+          {buffs
+            ? buffs
+                .filter((buff, index) => buffs.indexOf(buff) === index)
+                .map((buff, index) => (
+                  <li key={index}>
+                    <a
+                      href={`${db}${buff.tooltip}`}
+                      rel={`${buff.tooltip}&lvl=80`}
+                      target="_blank"
+                    >
+                      {buff.name}
+                    </a>
+                  </li>
+                ))
+            : "---"}
+        </ul>
+        <h3>debuffs:</h3>
+        <ul>
+          {debuffs
+            ? debuffs
+                .filter((debuff, index) => debuffs.indexOf(debuff) === index)
+                .map((debuff, index) => (
+                  <li key={index}>
+                    <a
+                      href={`${db}${debuff.tooltip}`}
+                      rel={`${debuff.tooltip}&lvl=80`}
+                      target="_blank"
+                    >
+                      {debuff.name}
+                    </a>
+                  </li>
+                ))
+            : "---"}
+        </ul>
+      </BuffsContainer>
     </Content>
   );
 };

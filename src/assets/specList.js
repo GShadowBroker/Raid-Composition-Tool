@@ -270,7 +270,7 @@ const specList = [
       {
         name: "Improved Devotion Aura",
         type: "Healing Received %",
-        tooltip: "spell=20911",
+        tooltip: "spell=20140",
       },
     ],
     debuffs: [

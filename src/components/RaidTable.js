@@ -38,10 +38,18 @@ const Row = ({ rowNumber, raidComp, callback }) => {
   return (
     <tr>
       <td onClick={() => callback(rowNumber, 1)}>
-        {raidComp[rowNumber - 1][0] ? raidComp[rowNumber - 1][0] : "Empty"}
+        {raidComp[rowNumber - 1][0] ? (
+          <div>{raidComp[rowNumber - 1][0]}</div>
+        ) : (
+          "Empty"
+        )}
       </td>
       <td onClick={() => callback(rowNumber, 2)}>
-        {raidComp[rowNumber - 1][1] ? raidComp[rowNumber - 1][1] : "Empty"}
+        {raidComp[rowNumber - 1][1] ? (
+          <div>{raidComp[rowNumber - 1][1]}</div>
+        ) : (
+          "Empty"
+        )}
       </td>
     </tr>
   );
