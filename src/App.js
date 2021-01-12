@@ -116,6 +116,41 @@ const App = () => {
     setIsModalOpen(false);
   };
 
+  const clearSlot = () => {
+    console.log("cell", currentCell);
+    const newRaidComp = raidComp;
+    if (currentCell[1] === 1) {
+      newRaidComp[currentCell[0] - 1] = [null, raidComp[currentCell[0] - 1][1]];
+      setRaidComp(newRaidComp);
+    } else if (currentCell[1] === 2) {
+      newRaidComp[currentCell[0] - 1] = [raidComp[currentCell[0] - 1][0], null];
+      setRaidComp(newRaidComp);
+    }
+    setIsModalOpen(false);
+  };
+
+  const clearRaid = () => {
+    setRaidComp([
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+      [null, null],
+    ]);
+    setSelectedClass(null);
+    setLastSelectedSpec(null);
+  };
+
   const raid = [];
   raidComp.forEach((row) => {
     if (row[0]) {
@@ -139,8 +174,27 @@ const App = () => {
     }
   });
 
-  console.log("buffs", buffs);
-  console.log("debuffs", debuffs);
+  // console.log("buffs", buffs);
+  // console.log("debuffs", debuffs);
+
+  const formatBuffs = (buffs) => {
+    const types = [];
+
+    for (let buff of buffs) {
+      if (!types.find((t) => t.name === buff.type)) {
+        types.push({ name: buff.type, list: [] });
+      }
+    }
+
+    for (let type of types) {
+      for (let buff of buffs) {
+        if (type.name === buff.type && type.list.indexOf(buff) < 0) {
+          type.list.push(buff);
+        }
+      }
+    }
+    return types;
+  };
 
   return (
     <Content>
@@ -155,6 +209,7 @@ const App = () => {
                 {selectedClass === c.name ? "-" : ""} {c.name}
               </PlayerClass>
             ))}
+            <button onClick={clearSlot}>clear slot</button>
           </PlayerClasses>
           <ClassSpecs>
             {selectedClass &&
@@ -170,43 +225,54 @@ const App = () => {
       </Modal>
       <RaidContainer>
         <RaidTable handleModalOpen={handleModalOpen} raidComp={raidComp} />
+        <button onClick={clearRaid}>reset raid</button>
       </RaidContainer>
       <BuffsContainer>
         <h3>buffs:</h3>
         <ul>
-          {buffs
-            ? buffs
-                .filter((buff, index) => buffs.indexOf(buff) === index)
-                .map((buff, index) => (
-                  <li key={index}>
-                    <a
-                      href={`${db}${buff.tooltip}`}
-                      rel={`${buff.tooltip}&lvl=80`}
-                      target="_blank"
-                    >
-                      {buff.name}
-                    </a>
-                  </li>
-                ))
-            : "---"}
+          {buffs &&
+            formatBuffs(buffs).map((buff, index) => (
+              <li key={index}>
+                <h4>{buff.name}</h4>
+                <ul>
+                  {buff.list.length > 0 &&
+                    buff.list.map((b, i) => (
+                      <li key={i}>
+                        <a
+                          href={`${db}${b.tooltip}`}
+                          rel={`${b.tooltip}&lvl=80`}
+                          target="_blank"
+                        >
+                          {b.name}
+                        </a>
+                      </li>
+                    ))}
+                </ul>
+              </li>
+            ))}
         </ul>
         <h3>debuffs:</h3>
         <ul>
-          {debuffs
-            ? debuffs
-                .filter((debuff, index) => debuffs.indexOf(debuff) === index)
-                .map((debuff, index) => (
-                  <li key={index}>
-                    <a
-                      href={`${db}${debuff.tooltip}`}
-                      rel={`${debuff.tooltip}&lvl=80`}
-                      target="_blank"
-                    >
-                      {debuff.name}
-                    </a>
-                  </li>
-                ))
-            : "---"}
+          {debuffs &&
+            formatBuffs(debuffs).map((buff, index) => (
+              <li key={index}>
+                <h4>{buff.name}</h4>
+                <ul>
+                  {buff.list.length > 0 &&
+                    buff.list.map((b, i) => (
+                      <li key={i}>
+                        <a
+                          href={`${db}${b.tooltip}`}
+                          rel={`${b.tooltip}&lvl=80`}
+                          target="_blank"
+                        >
+                          {b.name}
+                        </a>
+                      </li>
+                    ))}
+                </ul>
+              </li>
+            ))}
         </ul>
       </BuffsContainer>
     </Content>
