@@ -14,19 +14,33 @@ const Content = styled.div`
   flex-wrap: wrap;
 
   width: 1000px;
-  max-width: 100vw;
+  max-width: 90vw;
   margin: auto;
   padding: 1rem 0.6rem;
+
+  @media only screen and (max-width: 360px) {
+    padding: 1rem 0;
+    max-width: 300px;
+  }
 `;
 
 const RaidContainer = styled.div`
   min-width: 500px;
   flex: 1;
+
+  @media only screen and (max-width: 580px) {
+    min-width: 300px;
+  }
 `;
 
 const BuffsContainer = styled.div`
   min-width: 300px;
   flex: 1;
+  padding: 0 1.2rem;
+
+  @media only screen and (max-width: 910px) {
+    padding: 0 0.6rem;
+  }
 `;
 
 const SpecContainer = styled.div`
@@ -34,21 +48,19 @@ const SpecContainer = styled.div`
 `;
 
 const PlayerClasses = styled.div`
-  border: 1px solid blue;
   width: 50%;
 `;
 
 const PlayerClass = styled.div`
-  border: 1px solid green;
+  color: ${(props) => props.color || "inherit"};
 `;
 
 const ClassSpecs = styled.div`
-  border: 1px solid purple;
   width: 50%;
 `;
 
 const PlayerSpec = styled.div`
-  border: 1px solid Orangered;
+  color: ${(props) => props.color || "inherit"};
 `;
 
 const App = () => {
@@ -205,8 +217,10 @@ const App = () => {
               <PlayerClass
                 key={c.name}
                 onClick={() => setSelectedClass(c.name)}
+                color={c && c.color}
               >
-                {selectedClass === c.name ? "-" : ""} {c.name}
+                <img src={c.icon} alt={c.name} width="22" height="22" />
+                {c.name}
               </PlayerClass>
             ))}
             <button onClick={clearSlot}>clear slot</button>
@@ -215,11 +229,31 @@ const App = () => {
             {selectedClass &&
               playerClasses
                 .filter((pc) => pc.name === selectedClass)[0]
-                .specs.map((c) => (
-                  <PlayerSpec key={c} onClick={() => addSpec(c)}>
-                    {lastSelectedSpec === c ? "-" : ""} {c}
-                  </PlayerSpec>
-                ))}
+                .specs.map((c) => {
+                  const currentClass =
+                    playerClasses.length > 0 &&
+                    playerClasses.filter((pc) => pc.name === selectedClass)[0];
+                  const classColor = currentClass && currentClass.color;
+                  const spec = specList.find((s) => s.name === c);
+
+                  return (
+                    <PlayerSpec
+                      key={c}
+                      onClick={() => addSpec(c)}
+                      color={classColor}
+                    >
+                      {spec && (
+                        <img
+                          src={spec.icon}
+                          alt={spec.name}
+                          width="22"
+                          height="22"
+                        />
+                      )}
+                      {lastSelectedSpec === c ? "-" : ""} {c}
+                    </PlayerSpec>
+                  );
+                })}
           </ClassSpecs>
         </SpecContainer>
       </Modal>

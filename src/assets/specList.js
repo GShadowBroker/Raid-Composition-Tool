@@ -2,6 +2,9 @@ const specList = [
   {
     name: "Combat Rogue",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/rogue/combat.png?raw=true",
+    color: "#FFF468",
     buffs: [],
     debuffs: [
       { name: "Wound Poison", type: "Healing", tooltip: "item=43235" },
@@ -18,6 +21,9 @@ const specList = [
   {
     name: "Assassination Rogue",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/rogue/assassination.png?raw=true",
+    color: "#FFF468",
     buffs: [],
     debuffs: [
       { name: "Wound Poison", type: "Healing", tooltip: "item=43235" },
@@ -33,6 +39,9 @@ const specList = [
   {
     name: "Elemental Shaman",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/shaman/elemental.png?raw=true",
+    color: "#0070DD",
     buffs: [
       {
         name: "Strength of Earth Totem",
@@ -68,6 +77,9 @@ const specList = [
   {
     name: "Restoration Shaman",
     role: "healer",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/shaman/restoration.png?raw=true",
+    color: "#0070DD",
     buffs: [
       {
         name: "Strength of Earth Totem",
@@ -106,6 +118,9 @@ const specList = [
   {
     name: "Enhancement Shaman",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/shaman/enhancement.png?raw=true",
+    color: "#0070DD",
     buffs: [
       {
         name: "Strength of Earth Totem",
@@ -139,6 +154,9 @@ const specList = [
   {
     name: "Fire Mage",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/mage/fire.png?raw=true",
+    color: "#3FC7EB	",
     buffs: [
       { name: "Arcane Intellect", type: "Intellect", tooltip: "spell=42995" },
     ],
@@ -153,6 +171,9 @@ const specList = [
   {
     name: "Arcane Mage",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/mage/arcane.png?raw=true",
+    color: "#3FC7EB	",
     buffs: [
       { name: "Arcane Intellect", type: "Intellect", tooltip: "spell=42995" },
       { name: "Arcane Empowerment", type: "Damage %", tooltip: "spell=31583" },
@@ -168,6 +189,9 @@ const specList = [
   {
     name: "Frost Mage",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/mage/frost.png?raw=true",
+    color: "#3FC7EB	",
     buffs: [
       { name: "Arcane Intellect", type: "Intellect", tooltip: "spell=42995" },
       {
@@ -183,6 +207,9 @@ const specList = [
   {
     name: "Retribution Paladin",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/paladin/retribution.png?raw=true",
+    color: "#F48CBA",
     buffs: [
       {
         name: "Blessing of Might",
@@ -241,6 +268,9 @@ const specList = [
   {
     name: "Protection Paladin",
     role: "tank",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/paladin/protection.png?raw=true",
+    color: "#F48CBA",
     buffs: [
       {
         name: "Blessing of Might",
@@ -299,6 +329,9 @@ const specList = [
   {
     name: "Holy Paladin",
     role: "healer",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/paladin/holy.png?raw=true",
+    color: "#F48CBA",
     buffs: [
       {
         name: "Blessing of Might",
@@ -337,6 +370,9 @@ const specList = [
   {
     name: "Disciple Priest",
     role: "healer",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/priest/discipline.png?raw=true",
+    color: "#FFFFFF",
     buffs: [
       {
         name: "Inspiration",
@@ -369,6 +405,9 @@ const specList = [
   {
     name: "Holy Priest",
     role: "healer",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/priest/holy.png?raw=true",
+    color: "#FFFFFF",
     buffs: [
       {
         name: "Inspiration",
@@ -396,6 +435,9 @@ const specList = [
   {
     name: "Shadow Priest",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/priest/shadow.png?raw=true",
+    color: "#FFFFFF",
     buffs: [
       {
         name: "Divine Spirit",
@@ -429,6 +471,9 @@ const specList = [
   {
     name: "Demonology Warlock",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/warlock/demonology.png?raw=true",
+    color: "#8788EE",
     buffs: [
       {
         name: "Demonic Pact",
@@ -467,6 +512,9 @@ const specList = [
   {
     name: "Affliction Warlock",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/warlock/affliction.png?raw=true",
+    color: "#8788EE",
     buffs: [
       {
         name: "Fel Intelligence",
@@ -515,6 +563,9 @@ const specList = [
   {
     name: "Destruction Warlock",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/warlock/destruction.png?raw=true",
+    color: "#8788EE",
     buffs: [
       {
         name: "Improved Imp",
@@ -553,6 +604,9 @@ const specList = [
   {
     name: "Fury Warrior",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/warrior/fury.png?raw=true",
+    color: "#C69B6D",
     buffs: [
       {
         name: "Battle Shout",
@@ -606,6 +660,9 @@ const specList = [
   {
     name: "Arms Warrior",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/warrior/arms.png?raw=true",
+    color: "#C69B6D",
     buffs: [
       {
         name: "Battle Shout",
@@ -654,6 +711,9 @@ const specList = [
   {
     name: "Protection Warrior",
     role: "tank",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/warrior/protection.png?raw=true",
+    color: "#C69B6D",
     buffs: [
       {
         name: "Battle Shout",
@@ -702,6 +762,9 @@ const specList = [
   {
     name: "Marksmanship Hunter",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/hunter/marksman.png?raw=true",
+    color: "#AAD372",
     buffs: [
       {
         name: "Trueshot Aura",
@@ -730,6 +793,9 @@ const specList = [
   {
     name: "Survival Hunter",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/hunter/survival.png?raw=true",
+    color: "#AAD372",
     buffs: [
       {
         name: "Hunting Party",
@@ -758,6 +824,9 @@ const specList = [
   {
     name: "Beast Mastery Hunter",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/hunter/beastmastery.png?raw=true",
+    color: "#AAD372",
     buffs: [
       {
         name: "Ferocious Inspiration",
@@ -801,6 +870,9 @@ const specList = [
   {
     name: "Blood Death Knight",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/deathknight/blood.png?raw=true",
+    color: "#C41E3A",
     buffs: [
       {
         name: "Horn of Winter",
@@ -818,6 +890,9 @@ const specList = [
   {
     name: "Unholy Death Knight",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/deathknight/unholy.png?raw=true",
+    color: "#C41E3A",
     buffs: [
       {
         name: "Horn of Winter",
@@ -836,6 +911,9 @@ const specList = [
   {
     name: "Frost Death Knight",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/deathknight/frost.png?raw=true",
+    color: "#C41E3A",
     buffs: [
       {
         name: "Horn of Winter",
@@ -868,6 +946,9 @@ const specList = [
   {
     name: "Restoration Druid",
     role: "healer",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/druid/restoration.png?raw=true",
+    color: "#FF7C0A	",
     buffs: [
       {
         name: "Tree of Life",
@@ -890,6 +971,9 @@ const specList = [
   {
     name: "Feral Druid",
     role: "dps/tank",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/druid/feral.png?raw=true",
+    color: "#FF7C0A	",
     buffs: [
       {
         name: "Mark of the Wild",
@@ -938,6 +1022,9 @@ const specList = [
   {
     name: "Balance Druid",
     role: "dps",
+    icon:
+      "https://github.com/orourkek/Wow-Icons/blob/master/images/spec/druid/balance.png?raw=true",
+    color: "#FF7C0A	",
     buffs: [
       {
         name: "Mark of the Wild",

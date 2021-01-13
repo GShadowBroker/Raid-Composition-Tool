@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import specList from "../assets/specList";
 
 const TableContainer = styled.div`
+  max-width: 500px;
   background-color: #3d3d3d;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `;
@@ -34,19 +36,54 @@ const TBody = styled.tbody`
   }
 `;
 
+const SpecNameContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  padding-left: 20%;
+
+  img {
+    margin-right: 0.2rem;
+  }
+  span {
+    word-break: break-word;
+  }
+`;
+
 const Row = ({ rowNumber, raidComp, callback }) => {
+  const col_1 = raidComp[rowNumber - 1][0];
+  const col_2 = raidComp[rowNumber - 1][1];
+
+  const col_1_spec = specList.find((spec) => spec.name === col_1);
+  const col_2_spec = specList.find((spec) => spec.name === col_2);
+
   return (
     <tr>
       <td onClick={() => callback(rowNumber, 1)}>
-        {raidComp[rowNumber - 1][0] ? (
-          <div>{raidComp[rowNumber - 1][0]}</div>
+        {col_1 ? (
+          <SpecNameContainer>
+            {col_1_spec && (
+              <img src={col_1_spec.icon} alt={col_1} width="22" height="22" />
+            )}
+            <span style={{ color: col_1_spec && col_1_spec.color }}>
+              {col_1}
+            </span>
+          </SpecNameContainer>
         ) : (
           "Empty"
         )}
       </td>
       <td onClick={() => callback(rowNumber, 2)}>
-        {raidComp[rowNumber - 1][1] ? (
-          <div>{raidComp[rowNumber - 1][1]}</div>
+        {col_2 ? (
+          <SpecNameContainer>
+            {col_2_spec && (
+              <img src={col_2_spec.icon} alt={col_2} width="22" height="22" />
+            )}
+            <span style={{ color: col_2_spec && col_2_spec.color }}>
+              {col_2}
+            </span>
+          </SpecNameContainer>
         ) : (
           "Empty"
         )}
