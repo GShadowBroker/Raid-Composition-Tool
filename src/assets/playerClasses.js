@@ -2,7 +2,7 @@ const playerClasses = [
   {
     name: "Mage",
     specs: ["Fire Mage", "Frost Mage", "Arcane Mage"],
-    color: "#3FC7EB	",
+    color: "#3FC7EB",
     icon: "http://armory.warmane.com/images/icons/classes/8.gif",
   },
   {
@@ -38,7 +38,7 @@ const playerClasses = [
   {
     name: "Druid",
     specs: ["Restoration Druid", "Balance Druid", "Feral Druid"],
-    color: "#FF7C0A	",
+    color: "#FF7C0A",
     icon: "http://armory.warmane.com/images/icons/classes/11.gif",
   },
   {

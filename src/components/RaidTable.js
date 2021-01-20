@@ -6,11 +6,12 @@ const TableContainer = styled.div`
   max-width: 500px;
   background-color: #3d3d3d;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
 `;
 
 const Table = styled.table`
   width: 100%;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 0.6rem;
 `;
 
@@ -25,14 +26,15 @@ const TBody = styled.tbody`
     text-align: center;
     color: #afafaf;
     cursor: pointer;
-    transition: background-color 0.2s linear;
-    border-radius: 2px;
+    transition: all 0.2s linear;
+    border-radius: 4px;
     width: 50%;
 
     padding: 0.2rem 0rem;
   }
   td:hover {
     background: #4e4e4e;
+    color: #dce1de;
   }
 `;
 
@@ -96,12 +98,12 @@ const RaidTable = ({ handleModalOpen, raidComp }) => {
   useEffect(() => {
     const onEnter = (element) => {
       if (element.textContent === "Empty") {
-        element.textContent = "Click to add player";
+        element.textContent = "+ Click to add player";
       }
     };
 
     const onLeave = (element) => {
-      if (element.textContent === "Click to add player") {
+      if (element.textContent === "+ Click to add player") {
         element.textContent = "Empty";
       }
     };

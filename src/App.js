@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import "./styles/App.css";
 import styled from "styled-components";
+import PieChart from "./components/PieChart";
 
 import specList from "./assets/specList";
 import { db } from "./constants/links";
@@ -38,6 +39,10 @@ const BuffsContainer = styled.div`
   flex: 1;
   padding: 0 1.2rem;
 
+  li {
+    list-style: none;
+  }
+
   @media only screen and (max-width: 910px) {
     padding: 0 0.6rem;
   }
@@ -49,18 +54,87 @@ const SpecContainer = styled.div`
 
 const PlayerClasses = styled.div`
   width: 50%;
+  padding: 1rem 0.6rem;
 `;
 
 const PlayerClass = styled.div`
+  cursor: pointer;
   color: ${(props) => props.color || "inherit"};
+  font-weight: 700;
+  border: ${(props) => `1px solid ${props.color}` || "inherit"};
+  border-radius: 4px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  margin-bottom: 0.4rem;
+  padding-right: 0.6rem;
+
+  display: flex;
+  justify-content: ${(props) =>
+    props.selected ? "space-between" : "flex-start"};
+  align-items: center;
+
+  img {
+    margin-right: 0.6rem;
+  }
+
+  &:hover {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.3)
+    );
+  }
 `;
 
 const ClassSpecs = styled.div`
   width: 50%;
+  padding: 1rem 0.6rem;
 `;
 
-const PlayerSpec = styled.div`
-  color: ${(props) => props.color || "inherit"};
+const PlayerSpec = styled(PlayerClass)``;
+
+const Button = styled.button`
+  border: none;
+  background-color: #216869;
+  color: inherit;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: background-color 0.2s linear;
+
+  &:hover {
+    background-color: #247e80;
+  }
+`;
+
+const Title = styled.h1`
+  color: #49a078;
+`;
+
+const Subtitle1 = styled.h2`
+  color: #49a078;
+`;
+
+const Subtitle2 = styled.h3`
+  color: #49a078;
+`;
+
+const OutboundLink = styled.a`
+  color: cyan !important;
+  transition: color 0.2s linear;
+  &:hover {
+    color: #02d8d8;
+  }
+`;
+
+const Footer = styled.footer`
+  width: 100%;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+  text-align: center;
+  border: none;
+  border-top: 0.5px solid #b3b3b3;
 `;
 
 const App = () => {
@@ -129,7 +203,6 @@ const App = () => {
   };
 
   const clearSlot = () => {
-    console.log("cell", currentCell);
     const newRaidComp = raidComp;
     if (currentCell[1] === 1) {
       newRaidComp[currentCell[0] - 1] = [null, raidComp[currentCell[0] - 1][1]];
@@ -186,9 +259,6 @@ const App = () => {
     }
   });
 
-  // console.log("buffs", buffs);
-  // console.log("debuffs", debuffs);
-
   const formatBuffs = (buffs) => {
     const types = [];
 
@@ -200,7 +270,10 @@ const App = () => {
 
     for (let type of types) {
       for (let buff of buffs) {
-        if (type.name === buff.type && type.list.indexOf(buff) < 0) {
+        if (
+          type.name === buff.type &&
+          !type.list.find((b) => b.name === buff.name)
+        ) {
           type.list.push(buff);
         }
       }
@@ -208,8 +281,33 @@ const App = () => {
     return types;
   };
 
+  const getDataset = () => {
+    let dataset = [];
+
+    for (let spec of raid) {
+      for (let c of playerClasses) {
+        if (c.specs.includes(spec)) {
+          if (dataset.find((d) => d.name === c.name)) {
+            dataset = dataset.map((d) => {
+              if (d.name === c.name) {
+                return { ...d, value: d.value + 1 };
+              }
+              return d;
+            });
+          } else {
+            dataset.push({ name: c.name, color: c.color, value: 1 });
+          }
+        }
+      }
+    }
+    return dataset;
+  };
+
   return (
     <Content>
+      <div style={{ width: "100%" }}>
+        <Title>Raid Buffs Viewer</Title>
+      </div>
       <Modal isModalOpen={isModalOpen} toggleModal={handleModalOpen}>
         <SpecContainer>
           <PlayerClasses>
@@ -218,12 +316,13 @@ const App = () => {
                 key={c.name}
                 onClick={() => setSelectedClass(c.name)}
                 color={c && c.color}
+                selected={selectedClass === c.name}
               >
                 <img src={c.icon} alt={c.name} width="22" height="22" />
-                {c.name}
+                {selectedClass === c.name && "> "} {c.name}
               </PlayerClass>
             ))}
-            <button onClick={clearSlot}>clear slot</button>
+            <Button onClick={clearSlot}>clear slot</Button>
           </PlayerClasses>
           <ClassSpecs>
             {selectedClass &&
@@ -241,6 +340,7 @@ const App = () => {
                       key={c}
                       onClick={() => addSpec(c)}
                       color={classColor}
+                      selected={lastSelectedSpec === c}
                     >
                       {spec && (
                         <img
@@ -250,7 +350,7 @@ const App = () => {
                           height="22"
                         />
                       )}
-                      {lastSelectedSpec === c ? "-" : ""} {c}
+                      {lastSelectedSpec === c && "> "} {c}
                     </PlayerSpec>
                   );
                 })}
@@ -259,15 +359,24 @@ const App = () => {
       </Modal>
       <RaidContainer>
         <RaidTable handleModalOpen={handleModalOpen} raidComp={raidComp} />
-        <button onClick={clearRaid}>reset raid</button>
+        <Button onClick={clearRaid}>reset raid</Button>
+        {raid.length > 0 && (
+          <PieChart
+            data={getDataset()}
+            title="class distribution"
+            style={{ marginTop: "1rem" }}
+          />
+        )}
       </RaidContainer>
       <BuffsContainer>
-        <h3>buffs:</h3>
+        <Subtitle1 title="Buffs and Debuffs in each category will NOT stack with each other">
+          BUFFS:
+        </Subtitle1>
         <ul>
           {buffs &&
             formatBuffs(buffs).map((buff, index) => (
               <li key={index}>
-                <h4>{buff.name}</h4>
+                <Subtitle2>{buff.name}</Subtitle2>
                 <ul>
                   {buff.list.length > 0 &&
                     buff.list.map((b, i) => (
@@ -285,12 +394,14 @@ const App = () => {
               </li>
             ))}
         </ul>
-        <h3>debuffs:</h3>
+        <Subtitle1 title="Buffs and Debuffs in each category will NOT stack with each other">
+          DEBUFFS:
+        </Subtitle1>
         <ul>
           {debuffs &&
             formatBuffs(debuffs).map((buff, index) => (
               <li key={index}>
-                <h4>{buff.name}</h4>
+                <Subtitle2>{buff.name}</Subtitle2>
                 <ul>
                   {buff.list.length > 0 &&
                     buff.list.map((b, i) => (
@@ -309,6 +420,28 @@ const App = () => {
             ))}
         </ul>
       </BuffsContainer>
+      <Footer>
+        <p>
+          Developed by{" "}
+          <OutboundLink
+            href="https://github.com/GShadowBroker"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Gledyson.
+          </OutboundLink>
+        </p>
+        <p>
+          Credits to Zigs who compiled all buffs and debuffs in{" "}
+          <OutboundLink
+            href="https://www.dalaran-wow.com/forums/community/general-discussion/topic/2149/the-comprehensive-list-of-raid-buffs-debuffs"
+            rel="noreferrer"
+            target="_blank"
+          >
+            this thread.
+          </OutboundLink>
+        </p>
+      </Footer>
     </Content>
   );
 };
