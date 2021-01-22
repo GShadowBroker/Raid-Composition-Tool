@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./styles/App.css";
 import styled from "styled-components";
 import PieChart from "./components/PieChart";
-import ReactGA from "react-ga";
 
 import specList from "./assets/specList";
 import { db } from "./constants/links";
@@ -167,10 +166,6 @@ const App = () => {
       setRaidComp(JSON.parse(savedRaidComp));
     }
   }, []);
-
-  // Google Analytics
-  const trackId = "UA-187566048-2";
-  ReactGA.initialize(trackId);
 
   const handleModalOpen = (row, column) => {
     setIsModalOpen(!isModalOpen);
