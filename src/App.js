@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/App.css";
 import styled from "styled-components";
 import PieChart from "./components/PieChart";
@@ -160,6 +160,13 @@ const App = () => {
     [null, null],
   ]);
 
+  useEffect(() => {
+    const savedRaidComp = window.localStorage.getItem("raid");
+    if (savedRaidComp) {
+      setRaidComp(JSON.parse(savedRaidComp));
+    }
+  }, []);
+
   const handleModalOpen = (row, column) => {
     setIsModalOpen(!isModalOpen);
 
@@ -188,6 +195,13 @@ const App = () => {
     }
   };
 
+  const saveToStorage = (newRaidComp) => {
+    if (!newRaidComp || newRaidComp.length === 0) return;
+    console.log("json newRaidComp", JSON.stringify(newRaidComp));
+    window.localStorage.setItem("raid", JSON.stringify(newRaidComp));
+    window.location.reload(false);
+  };
+
   // Adds selected spec to raid table
   const addSpec = (spec) => {
     setLastSelectedSpec(spec);
@@ -200,6 +214,7 @@ const App = () => {
       setRaidComp(newRaidComp);
     }
     setIsModalOpen(false);
+    saveToStorage(newRaidComp);
   };
 
   const clearSlot = () => {
@@ -212,6 +227,7 @@ const App = () => {
       setRaidComp(newRaidComp);
     }
     setIsModalOpen(false);
+    saveToStorage(newRaidComp);
   };
 
   const clearRaid = () => {
@@ -234,6 +250,7 @@ const App = () => {
     ]);
     setSelectedClass(null);
     setLastSelectedSpec(null);
+    window.localStorage.removeItem("raid");
   };
 
   const raid = [];
@@ -384,7 +401,6 @@ const App = () => {
                         <a
                           href={`${db}${b.tooltip}`}
                           rel={`${b.tooltip}&lvl=80`}
-                          target="_blank"
                         >
                           {b.name}
                         </a>
@@ -409,7 +425,6 @@ const App = () => {
                         <a
                           href={`${db}${b.tooltip}`}
                           rel={`${b.tooltip}&lvl=80`}
-                          target="_blank"
                         >
                           {b.name}
                         </a>
@@ -425,7 +440,7 @@ const App = () => {
           Developed by{" "}
           <OutboundLink
             href="https://github.com/GShadowBroker"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             target="_blank"
           >
             Gledyson.
@@ -435,7 +450,7 @@ const App = () => {
           Credits to Zigs who compiled all buffs and debuffs in{" "}
           <OutboundLink
             href="https://www.dalaran-wow.com/forums/community/general-discussion/topic/2149/the-comprehensive-list-of-raid-buffs-debuffs"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             target="_blank"
           >
             this thread.
